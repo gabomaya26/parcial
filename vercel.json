@@ -1,0 +1,14 @@
+{
+    "builds": [
+        {
+            "src": "project/wgsi.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routers": [
+        {
+            "src": "/(.*)",
+            "dest": "project/wgsi.py" 
+        }
+    ]
+}
