@@ -1,14 +1,15 @@
+
 {
     "builds": [
         {
-            "src": "project/wgsi.py",
+            "src": "project/wsgi.py",
             "use": "@vercel/python"
         }
     ],
-    "routers": [
+    "rewrites": [
         {
-            "src": "/(.*)",
-            "dest": "project/wgsi.py" 
+            "source": "/(.*)",
+            "destination": "project/wsgi.py"
         }
     ]
 }
