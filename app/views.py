@@ -14,6 +14,35 @@ def get_messages(request):
 def create_message(request):
     username = request.data.get("username")
     content = request.data.get("content")
+    image = request.FILES.get("image")  # Recibiendo la imagen
+    
+    if not username or not content:
+        return Response(
+            {"error": "Los campos son requeridos."}, status=status.HTTP_400_BAD_REQUEST
+        )
+    
+    author, _ = Author.objects.get_or_create(name=username)
+    
+    # Crear un diccionario con los datos del mensaje, incluyendo la imagen
+    message_data = {
+        "content": content,
+        "image": image,  # Incluimos la imagen
+    }
+    
+    serializer = MessageSerializer(data=message_data)
+    
+    if serializer.is_valid():
+        serializer.save(author=author)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+"""""
+@api_view(["POST"])
+def create_message(request):
+    username = request.data.get("username")
+    content = request.data.get("content")
     
     if not username or not content:
         return Response(
@@ -29,7 +58,7 @@ def create_message(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+"""
 @api_view(["PUT"])
 def update_profile_picture(request, author_id):
     try:

@@ -12,6 +12,8 @@ class AuthorSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     author = AuthorSerializer(read_only=True)
     
+    image = serializers.ImageField(allow_empty_file=True, required=False)  # Este es el campo para la imagen
+    
     class Meta:
         model = Message
         fields = "__all__"
